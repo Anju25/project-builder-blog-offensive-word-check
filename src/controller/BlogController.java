@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.Blog;
 import model.User;
+import utility.CheckBlogPost;
+import utility.OffensiveWordsChecker;
+//import utility.OffensiveWordsInterface;
 
 
 @WebServlet(urlPatterns= {"/blog"})
@@ -40,6 +43,7 @@ public class BlogController extends HttpServlet {
 		LocalDate postedOn = LocalDate.now();
 		
 		User user = null;
+		
 		Blog blog=new Blog(title,description,postedOn);
 		System.out.println(title);
 		System.out.println(description);
@@ -47,8 +51,15 @@ public class BlogController extends HttpServlet {
 		blog.setBlogTitle(title);
 		blog.setBlogDescription(description);
 		blog.setDate(postedOn);
+		
+		OffensiveWordsChecker obj2=new CheckBlogPost();
+		//OffensiveWordsInterface obj1=new CheckBlogPost();
 
-		if(checkblog!) {
+		boolean checkblog=obj2.checkBlog(blog);
+		System.out.println(obj2.checkBlogTitle(blog));
+		System.out.println(obj2.checkBlogDescription(blog));
+		System.out.println(checkblog);
+		if(checkblog) {
 			request.setAttribute("blog", blog);
 			request.setAttribute("user",user);
 			RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/blogView.jsp");
